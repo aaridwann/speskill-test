@@ -5,23 +5,29 @@ import { React,useEffect, useState } from 'react';
 function App() {
 const [total,setTotal] = useState()
 const [subTotal,setSubTotal] = useState()
+const [data, setData] = useState([])
  
 const getData = async () => {
   await fetch('https://spe-academy.spesolution.net/api/recruitment',{
-    Method: 'GET',
-    Headers:{
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer' + 'o7Ytbt9XQLI3PgtebJfKSXKEf0XHU74Y'
+    method: 'GET',
+    headers:{
+      'Authorization': 'Bearer o7Ytbt9XQLI3PgtebJfKSXKEf0XHU74Y' ,
+      'Content-Type': 'application/json'
     },
   })
   .then((res) => res.json())
-  .then((data) => console.log(data))
+  .then((data) => setData(data))
 }
+console.log(data.map((x) => x.product.code));
+
+
 useEffect(() => {
   getData()
 },[])
+
+
   return (
-      <div className="w-full mx-auto ">
+      <div className="w-full mx-auto pb-4 ">
           {/* Section 1 */}
           <div className=' w-4/5 mx-auto h-80  bg-gradient-to-r from-biru to-pink overflow-hidden'>
             {/* TimeStamps */}
@@ -36,49 +42,43 @@ useEffect(() => {
 
       {/* Shop */}
 
-        <div className=' w-full '>
-          <table className='table-auto mx-auto w-3/4 '>
-          <thead className='bg-hitam text-cream'>
-            <tr>
-              <th>PRODUCT</th>
-              <th>QUANTITY</th>
-              <th>SUBTOTAL</th>
-            </tr>
-         </thead>
-
-         <tbody>
-            <tr className='border-b-2 m-10'>
-              <td>
-                <div className='flex justify-center gap-4 items-center'>
-                  {/* Gambar */}
-                  <div className=' border-2 bg-cover flex justify-center items-center w-56 h-56'>
-                    <img className='bg-cover' src='https://akcdn.detik.net.id/visual/2018/08/09/74d69c6a-18a4-4c16-8565-1c98f9f4388e_169.jpeg?w=650'/>
-                  </div>
-                  {/* Caption */}
-                  <div className='flex flex-col'>
-                    <p className=' text-biru font-bold text-sm'>Code</p>
-                    <p className=' text-hitam font-bold text-lg'>NAMA MOBIL</p>
-                    <p>IDR, 3000.000</p>
-                    <p>0 IN STOCK</p>
-                  </div>
-
-                </div>
-              </td>
-              <td><input className='input border-2 w-8 h-8 rounded-lg' placeholder='0' type='number' /></td>
-              <td>3000000</td>
-            </tr>
-
-
-    
-    </tbody>
-
-    {/* Total */}
-          <div className=' mt-4 bg-hitam text-cream flex gap-8 font-bold justify-end items-center h-10 px-8 ' >
-            <p>Total: </p>
-            <p> 80.000.000</p>
+        <div className=' w-5/6  mx-auto flex flex-col gap-8  justify-around items-center'>
+         {/* Head */}
+          <div className=' w-full flex justify-around  text-cream bg-hitam h-12 items-center gap-20'>
+            <p className='w-52'>Product</p>
+            <p>Quantity</p>
+            <p>SubTotal</p>
           </div>
+      
+      
+          {/* Content */}
+          {data.map((x) => (
 
-          </table>
+            <div className=' w-full flex flex-row justify-between px-4 items-center gap-8 border-b-2 pb-4 mt-4'>
+              
+              <div className='flex gap-2 items-center '>
+              <img className='border p-2' width='250' src={x.product.media_url}/>
+              <div className='flex flex-col flex-wrap w-60 gap-1 items-start justify-start'>
+              <p className='text-biru font-bold text-sm'>{x.product.code}</p>
+              <p className='text-xl font-bold '>{x.product.name}</p>
+              <p className='text-md font-bold'>IDR. {x.product.price}</p>
+              <p className='text-sm'>{x.product.quantity} </p>
+              </div>
+            </div>
+            <input type='number' className=' input-group input border w-8 h-8 '/>
+            <p className=' mr-16'>Sub total</p>
+
+            </div>
+            ))}
+
+
+
+        {/* Bottom */}
+        <div className=' w-full px-8 bg-hitam text-cream flex gap-4 justify-end items-center h-12'>
+        <p className=' font-bold text-sm'>Subtotal</p>
+        <p className=' font-bold text-xl'>80.000.000</p>
+        </div>
+
 
         </div>
 
