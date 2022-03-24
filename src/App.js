@@ -28,6 +28,7 @@ useEffect(() => {
               <div className=' border-8 border-cream rounded-3xl w-screen relative -rotate-12 h-screen -mt-96 -top-40  flex flex-col justify-end p-4  bg-hitam mx-auto mb-8'>
                 <p className=' ml-20 text-hijau text-4xl '> SPE / FRONTEND </p>
                 <p className=' text-hijau text-lg  rotate-90 bottom-28 -left-12 absolute '> {new Date().toDateString()}</p>
+                
                 {/* <p className=' text-hijau text-lg'> {time}</p> */}
 
               </div>
